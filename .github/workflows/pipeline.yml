@@ -8,9 +8,6 @@ on:
 jobs:
   tests:
     runs-on: ubuntu-20.04
-    environment: test
-    env:
-      TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -23,8 +20,12 @@ jobs:
       - name: Build
         run: npm run build
       - name: Integration tests server
+        env:
+          TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
         run: npm run test
       - name: e2e tests
+        env:
+          TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
         uses: cypress-io/github-action@v5
         with:
           command: npm run test:e2e
