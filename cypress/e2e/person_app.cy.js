@@ -13,6 +13,9 @@ describe('Person app ', function () {
     cy.get('#name').type('nameAddedOnCypress')
     cy.get('#number').type('121-112233')
     cy.contains('add').click()
+    cy.contains('nameAddedOnCypress')
+    cy.contains('121-112233')
+    cy.get('#name').should('not.contain', 'nameAddedOnCypress')
   })
   it('fails Person without name input', function () {
     cy.visit('http://localhost:8080')
