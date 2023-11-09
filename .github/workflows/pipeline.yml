@@ -19,6 +19,11 @@ jobs:
         run: npm run lint
       - name: Build
         run: npm run build
+      - name: Integration tests server
+        env:
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+          TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
+        run: npm run test
       - name: e2e tests
         env:
           MONGODB_URI: ${{ secrets.MONGODB_URI }}
