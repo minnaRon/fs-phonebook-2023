@@ -1,0 +1,28 @@
+name: Health check 
+
+on:
+#  schedule:
+#    - cron: '50 * * * *'
+  push:
+    branches:
+      - master
+
+jobs:
+  ping:
+    if: ${{ 'this line is removed' == 'true'}}
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+      - name: URL Health Check
+        uses: Jtalk/url-health-check-action@fc2fe2a9ca9c9734d992431b749b79350d771fbb
+        with:
+          url: https://fs-phonebook-2023.fly.dev/
+      - name: Health check failed
+        uses: rjstone/discord-webhook-notify@89b0bf43c2c8514f70d0dcba4a706b904e8a3112
+        if: ${{ failure() }}
+        with:
+          severity: error
+          text: Periodic HEALTH CHECK FAILED! 
+          description: latest commit ${{ toJson(github.event.head_commit.url) }}
+          details: check this with ${{ toJson(github.event.pusher.name) }}
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
