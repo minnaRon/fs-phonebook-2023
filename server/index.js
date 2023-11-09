@@ -30,7 +30,7 @@ mongoose.connect(MONGODB_URI)
   })
 
 app.use('/', personsRouter)
-app.use('/gh', healthcheckRouter)
+app.use('/checks', healthcheckRouter)
 
 if (process.env.NODE_ENV === 'test') {
   // eslint-disable-next-line global-require
